@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import csvParser from 'csv-parser';               // ← default import
+import csvParser from 'csv-parser';
 import { Readable } from 'stream';
 
 interface CsvRow {
@@ -20,7 +20,7 @@ interface CsvRow {
 export class AdminService {
   constructor(private prisma: PrismaService) {}
 
-  // ────── REGION CRUD (example) ──────
+  // REGION CRUD
   async createRegion(data: { name: string }) {
     return this.prisma.region.create({ data });
   }
@@ -37,14 +37,14 @@ export class AdminService {
     return this.prisma.region.delete({ where: { id } });
   }
 
-  // ────── BULK IMPORT ──────
+  // BULK IMPORT
   async importRetailers(file: Express.Multer.File) {
     const rows: CsvRow[] = [];
     const stream = Readable.from(file.buffer);
 
     return new Promise((resolve, reject) => {
       stream
-        .pipe(csvParser())                     // ← call the default export
+        .pipe(csvParser())
         .on('data', (row: CsvRow) => rows.push(row))
         .on('end', async () => {
           try {
@@ -72,7 +72,7 @@ export class AdminService {
     });
   }
 
-  // ────── BULK ASSIGN ──────
+  // BULK ASSIGN
   async bulkAssign(salesRepId: number, retailerIds: number[]) {
     return this.prisma.salesRepRetailer.createMany({
       data: retailerIds.map(id => ({ salesRepId, retailerId: id })),

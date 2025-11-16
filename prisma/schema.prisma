@@ -53,6 +53,8 @@ model Area {
   region    Region   @relation(fields: [regionId], references: [id])
   territories Territory[]
   retailers Retailer[]
+
+  @@unique([name, regionId])  // ← ADD THIS LINE
 }
 
 model Distributor {

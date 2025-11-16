@@ -22,7 +22,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class AdminController {
   constructor(private adminService: AdminService) {}
 
-  // ────── REGION CRUD (example) ──────
+  // REGION CRUD
   @Post('regions')
   createRegion(@Body() data: { name: string }) {
     return this.adminService.createRegion(data);
@@ -43,14 +43,14 @@ export class AdminController {
     return this.adminService.deleteRegion(parseInt(id, 10));
   }
 
-  // ────── BULK IMPORT ──────
+  // BULK IMPORT
   @Post('retailers/import')
   @UseInterceptors(FileInterceptor('file'))
   importRetailers(@UploadedFile() file: Express.Multer.File) {
     return this.adminService.importRetailers(file);
   }
 
-  // ────── BULK ASSIGN ──────
+  // BULK ASSIGN
   @Post('assignments/bulk')
   bulkAssign(@Body() data: { salesRepId: number; retailerIds: number[] }) {
     return this.adminService.bulkAssign(data.salesRepId, data.retailerIds);

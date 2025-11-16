@@ -1,5 +1,5 @@
-@jwt_rep = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjMyOTQwNjIsImV4cCI6MTc2MzI5NzY2Mn0.IqfCEMUdDOOqgAdNgCLgtZl2uUZlxoy84y4F8fsktSI"
-@jwt_admin = ""
+@jwt_rep = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbGVzcmVwIiwic3ViIjoyLCJyb2xlIjoiU0FMRVNfUkVQIiwiaWF0IjoxNzYzMjk2NTA3LCJleHAiOjE3NjMzMDAxMDd9.Wqj-vrWzVJg6zJmg8UQw6E58vsJuL1jShkHH0S1AQR0"
+@jwt_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjMyOTcyMTQsImV4cCI6MTc2MzMwMDgxNH0.mxfLFVG5VOdO2yD92iKBvaSI6OWhcPxJnENgtWWQy7c"
 
 ### 1. LOGIN - Get JWT (Admin)
 POST http://localhost:3000/auth/login
