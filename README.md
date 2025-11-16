@@ -1,98 +1,170 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Retailer Sales Representative App
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A comprehensive backend application built with **NestJS**, **Prisma**, and **PostgreSQL** for managing retailers, sales representatives, regions, areas, and assignments. Features JWT authentication, role-based access control, and bulk operations support.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### **Authentication & Authorization**
 
-## Project setup
+* JWT-based authentication
+* Role-based access control (ADMIN, SALES_REP)
 
-```bash
-$ npm install
+### **Core Functionality**
+
+* Complete CRUD operations for regions, areas, and retailers
+* Bulk retailer import via CSV
+* Bulk assign/unassign retailers to sales representatives
+
+### **Tech Stack**
+
+* NestJS framework
+* Prisma ORM
+* PostgreSQL database
+* Fully Dockerized setup
+
+---
+
+## 📁 Project Structure
+
+```
+.
+├── docker-compose.yml         # Multi-service Docker setup
+├── Dockerfile                 # App Docker build
+├── .env                       # Environment variables
+├── prisma/
+│   ├── schema.prisma          # Prisma DB schema
+│   ├── seed.ts                # DB seeding script
+│   └── migrations/            # Prisma migrations
+├── src/
+│   ├── app.module.ts          # Main NestJS module
+│   ├── app.controller.ts      # Health check/root
+│   ├── admin/                 # Admin routes, service, module
+│   ├── auth/                  # Auth logic, guards, JWT
+│   ├── prisma/                # Prisma service/module
+│   ├── retailers/             # Retailer routes, service, module
+│   └── ...                    # Other modules
+├── docs/
+│   └── api.http               # Example API requests
+└── test/                      # E2E tests
 ```
 
-## Compile and run the project
+---
+
+## 📋 Prerequisites
+
+* Docker & Docker Compose
+* Node.js (for local development)
+
+---
+
+## 🐳 Quick Start (Docker)
+
+### 1. Clone the repository
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone <repository-url>
+cd retailer-sales-app
 ```
 
-## Run tests
+### 2. Set up environment variables
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cp .env.example .env
+# Update .env with your configuration (especially JWT_SECRET)
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Build and start the services
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker compose up --build -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 4. Seed the database (if not auto-run)
 
-## Resources
+```bash
+docker compose exec app npx ts-node prisma/seed.ts
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+**API URL:** [http://localhost:3000](http://localhost:3000)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## 💻 Local Development
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Install dependencies
 
-## Stay in touch
+```bash
+npm install
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Generate Prisma client
 
-## License
+```bash
+npx prisma generate
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Run database migrations
+
+```bash
+npx prisma migrate dev
+```
+
+### Seed the database
+
+```bash
+npx ts-node prisma/seed.ts
+```
+
+### Start the development server
+
+```bash
+npm run start:dev
+```
+
+---
+
+## 🔐 Authentication
+
+Use the `/auth/login` endpoint with username/password credentials to obtain a JWT token.
+
+### **Default Seeded Users**
+
+| Role      | Username   | Password        |
+| --------- | ---------- | --------------- |
+| Admin     | `admin`    | `adminpassword` |
+| Sales Rep | `salesrep` | `reppassword`   |
+
+Use the token:
+
+```http
+Authorization: Bearer <your-token>
+```
+
+---
+
+## 📚 API Documentation
+
+See `docs/api.http` for ready-to-use HTTP requests covering all available endpoints.
+
+---
+
+## 🛠️ Useful Commands
+
+| Command                                              | Description                               |
+| ---------------------------------------------------- | ----------------------------------------- |
+| `docker compose up --build -d`                       | Build and run containers in detached mode |
+| `docker compose down`                                | Stop and remove containers                |
+| `docker compose logs app`                            | View application logs                     |
+| `docker compose exec app npx ts-node prisma/seed.ts` | Run database seed script                  |
+| `npx prisma studio`                                  | Open Prisma Studio (database GUI)         |
+| `npm run test`                                       | Run tests                                 |
+
+---
+
+## 📝 License
+
+MIT
+
+Built with ❤️ using **NestJS**, **Prisma**, and **PostgreSQL**.
