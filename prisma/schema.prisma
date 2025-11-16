@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SalesRep {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  name     String
+  phone    String
+  password String
+  retailers Retailer[]
+}
+
+model Retailer {
+  id           Int        @id @default(autoincrement())
+  uid          String     @unique
+  name         String
+  phone        String
+  region       String
+  area         String
+  distributor  String
+  territory    String
+  points       Int
+  routes       String
+  salesRepId   Int?
+  salesRep     SalesRep?  @relation(fields: [salesRepId], references: [id])
+}
