@@ -1,0 +1,88 @@
+@jwt_rep = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoxLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjMyOTQwNjIsImV4cCI6MTc2MzI5NzY2Mn0.IqfCEMUdDOOqgAdNgCLgtZl2uUZlxoy84y4F8fsktSI"
+@jwt_admin = ""
+
+### 1. LOGIN - Get JWT (Admin)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "adminpassword"
+}
+
+### 2. RETAILER LISTING (SR only) - Paginated + Search + Filters
+GET http://localhost:3000/retailers?page=1&limit=10&search=dhaka&regionId=1&areaId=2
+Authorization: Bearer {{jwt_rep}}
+
+### 3. RETAILER DETAIL (SR only)
+GET http://localhost:3000/retailers/RET-001
+Authorization: Bearer {{jwt_rep}}
+
+### 4. UPDATE RETAILER (SR only) - allowed fields
+PATCH http://localhost:3000/retailers/RET-001
+Authorization: Bearer {{jwt_rep}}
+Content-Type: application/json
+
+{
+  "points": 150,
+  "routes": "Route A > B > C",
+  "notes": "High potential customer"
+}
+
+### 5. ADMIN: List Regions
+GET http://localhost:3000/admin/regions
+Authorization: Bearer {{jwt_admin}}
+
+### 6. ADMIN: Create Region
+POST http://localhost:3000/admin/regions
+Authorization: Bearer {{jwt_admin}}
+Content-Type: application/json
+
+{
+  "name": "Sylhet"
+}
+
+### 7. ADMIN: Update Region
+PATCH http://localhost:3000/admin/regions/1
+Authorization: Bearer {{jwt_admin}}
+Content-Type: application/json
+
+{
+  "name": "Dhaka Metro"
+}
+
+### 8. ADMIN: Delete Region
+DELETE http://localhost:3000/admin/regions/1
+Authorization: Bearer {{jwt_admin}}
+
+### 9. ADMIN: Bulk Import Retailers (CSV)
+POST http://localhost:3000/admin/retailers/import
+Authorization: Bearer {{jwt_admin}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="retailers.csv"
+Content-Type: text/csv
+
+< ./sample-retailers.csv
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 10. ADMIN: Bulk Assign Retailers to SR
+POST http://localhost:3000/admin/assignments/bulk
+Authorization: Bearer {{jwt_admin}}
+Content-Type: application/json
+
+{
+  "salesRepId": 2,
+  "retailerIds": [1, 2, 3, 4, 5]
+}
+
+### 11. ADMIN: Bulk Unassign Retailers
+POST http://localhost:3000/admin/assignments/unassign
+Authorization: Bearer {{jwt_admin}}
+Content-Type: application/json
+
+{
+  "salesRepId": 2,
+  "retailerIds": [3, 4]
+}
